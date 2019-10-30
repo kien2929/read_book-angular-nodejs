@@ -1,0 +1,82 @@
+<div >
+    <div class="row col-12">
+        <form class="form-inline">
+            <input class="form-control mr-sm-6 col" type="search" placeholder="Search" [(ngModel)]="searchKey"
+                name="search" aria-label="Search" (keyup)="restore(value)">
+        </form>
+    </div>
+  <div class="row col-12" style="margin-top: 10px">
+    <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+      Add new
+    </button>
+
+    <div class="col-12">
+      <h3>List category</h3>
+      <div class="row one">
+        <div class="col-1 font-weight-bold">ID</div>
+        <div class="col-3 font-weight-bold">Catalog</div>
+        <div class="col-2 font-weight-bold">Description</div>
+        <div class="col-3 font-weight-bold">ParentId</div>
+        <div class="col-3 row font-weight-bold">Action</div>
+      </div>
+      <div *ngFor="let category of pageOfItems">
+        <app-category [catalog]="category.catalog" [description]='category.description' [parentId]='category.parentId'
+          [id]='category.id' (removeCategory)="removeCategoryById($event)" (editCategory)="editCategoryById($event)">
+        </app-category>
+      </div>
+      
+    </div>
+    <div class="mx-auto m-5">
+        <jw-pagination [items]="arrCategory" [pageSize]=5 (changePage)="onChangePage($event)"></jw-pagination>
+      </div>
+  </div>
+
+  
+
+  <!-- Edit -->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Category</h5>
+          <button type="button" class="close" (click)="resetData()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="">
+            <div class="form-group">
+              <label>Catalog</label>
+              <input class="form-control" placeholder="input catalog" [(ngModel)]="catalog">
+              <div class="feedback">{{feedbackcatalog}}</div>
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <input class="form-control" placeholder="input Description" [(ngModel)]="description">
+              <div class="feedback">{{feedbackdescription}}</div>
+            </div>
+            <div class="form-group">
+              <label>ParentId</label>
+              <!-- <input type="number" class="form-control" placeholder="input ParentId" [(ngModel)]="parentId">
+               -->
+               <select class="form-control" id="categoryId" [(ngModel)]="parentId">
+                  <option value="0">NONE</option>
+                  <option *ngFor="let item of arrParentCategory" [(value)]="item.id">Id:{{item.id}}, Name :{{item.catalog|uppercase}}</option>
+                </select>
+              <div class="feedback">{{feedbackparentId}}</div>
+            </div>
+          </div>
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetData()">Close</button>
+          <button type="button" class="btn btn-primary"  (click)="addPerson()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

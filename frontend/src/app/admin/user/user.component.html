@@ -1,0 +1,13 @@
+<div class="row one col-12">
+    <div class="col-1">#{{id}}</div>
+    <div class="col-3">{{name}}</div>
+    <div class="col-1">
+        <div>{{rule}}</div>
+        <div *ngIf="rule==yes">admin</div>
+    </div>
+    <div class="col-3">{{password}}</div>
+    <div class="col-4 row btn-group">
+        <button type="button" class="btn btn-primary col-6" (click)="editByClick()">Edit</button>
+        <button type="button" class="btn btn-danger col-6" (click)="removeByClick()">Xóa</button>
+    </div>
+</div>

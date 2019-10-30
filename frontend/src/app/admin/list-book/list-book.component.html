@@ -1,0 +1,201 @@
+<div>
+  <div class="row col-12">
+    <form class="form-inline">
+      <input class="form-control mr-sm-6 col" type="search" placeholder="Search" [(ngModel)]="searchKey" name="search"
+        aria-label="Search" (keyup)="restore(value)">
+    </form>
+  </div>
+  <div class="row col-12" style="margin-top: 10px">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+      Add new
+    </button>
+
+
+    <div class="col-12">
+      <h3>List book</h3>
+      <div class="row one col-12">
+        <div class="col-1 font-weight-bold">ID</div>
+        <div class="col-2 font-weight-bold">Title</div>
+        <div class="col-2 font-weight-bold">Author</div>
+        <div class="col-1 font-weight-bold">Price</div>
+        <div class="col-6 font-weight-bold">Action</div>
+      </div>
+      <div *ngFor="let book of pageOfItems">
+        <app-book [title]="book.title" [author]='book.author' [price]='book.price' [id]='book.id'
+          (removeBook)="removeBookById($event)" (editBook)="editBookById($event)" (upload)="uploadId($event)">
+        </app-book>
+      </div>
+
+    </div>
+    <div class="mx-auto m-5">
+      <jw-pagination [items]="arrBook" [pageSize]=5 (changePage)="onChangePage($event)"></jw-pagination>
+    </div>
+  </div>
+
+
+  <!-- Edit -->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Book</h5>
+          <button type="button" class="close" (click)="resetData()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="">
+            <!-- <form [formGroup]="registerForm" (ngSubmit)="onSubmit()"> -->
+              <div class="form-group">
+                <label>Title</label>
+                <input class="form-control"  [(ngModel)]="title">
+                <div class="feedback">{{feedbacktitle}}</div>
+              </div>
+              <div class="form-group">
+                <label>Author</label>
+                <input class="form-control" [(ngModel)]="author">
+                <div class="feedback">{{feedbackauthor}}</div>
+              </div>
+              <div class="form-group">
+                <label>Publish Year</label>
+                <input type="number" class="form-control"  [(ngModel)]="publish">
+                <div class="feedback">{{feedbackpublish}}</div>
+              </div>
+              <div class="form-group">
+                <label>Price</label>
+                <input type="number" class="form-control"  [(ngModel)]="price">
+                <div class="feedback">{{feedbackprice}}</div>
+              </div>
+
+
+
+              <div class="form-group">
+                <label for="categoryId">Catalog</label><br>
+                <select class="form-control" id="categoryId" [(ngModel)]="categoryId">
+                  <option value="0">NONE</option>
+                  <option *ngFor="let item of arrCategory" [(value)]="item.id">Id:{{item.id}}, Name
+                    :{{item.catalog|uppercase}}</option>
+                </select>
+                <div class="feedback">{{feedbackcategoryId}}</div>
+              </div>
+              <div class="form-group">
+                <label>Content</label>
+                <textarea class="form-control"  [(ngModel)]="content" rows=5></textarea>
+                <div class="feedback">{{feedbackcontent}}</div>
+              </div>
+
+              <div class="form-group">
+                <label>Number of pages</label>
+                <input type="number" class="form-control" [(ngModel)]="numberOfPages">
+                <div class="feedback">{{feedbackcontent}}</div>
+              </div>
+              <div class="form-group">
+                <label>Company Issued</label>
+                <input class="form-control"  [(ngModel)]="companyIssued">
+                <div class="feedback">{{feedbackcompanyIssued}}</div>
+              </div>
+            <!-- </form> -->
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetData()">Close</button>
+          <button type="button" class="btn btn-primary" (click)="addBook()" data-dismiss=datadissmiss>Save
+            changes</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- Detail -->
+  <div class="modal fade" id="details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">{{title}} </h5>
+          <button type="button" class="close" data-dismiss="modal" (click)="resetData()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Category Id:{{categoryId}}</p>
+          <p>Price:{{price}} </p>
+          <p>Author:{{ author | uppercase }}</p>
+          <p>Publish: {{ publish}}</p>
+          <img src="http://127.0.0.1:3000/{{image}}" style="width:100%">
+          <p>{{content}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetData()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Upload -->
+  <div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">{{title}} </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <!-- ------------------ -->
+          <div class="form-group">
+            <label for="single">Image</label>
+            <input type="file" class="form-control" name="single" ng2FileSelect [uploader]="uploader" />
+          </div>
+
+          <tr *ngFor="let item of uploader.queue">
+            <td><strong>{{ item.file.name }}</strong></td>
+            <td nowrap>{{ item.file.size/1024/1024 | number:'.2' }} MB</td>
+            <td>
+              <div class="progress" style="margin-bottom: 0;">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+              </div>
+            </td>
+            <td class="text-center">
+              <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+              <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+              <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+            </td>
+            <td nowrap>
+
+              <button type="button" class="btn btn-success btn-xs" (click)="upload();item.upload();"
+                [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                <span class="glyphicon glyphicon-upload"></span> Upload
+              </button>
+              <button type="button" class="btn btn-danger btn-xs" (click)="item.remove();remove();">
+                <span class="glyphicon glyphicon-trash"></span> Remove
+              </button>
+            </td>
+          </tr>
+
+          <div>
+            Upload progress:
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</div>

@@ -1,0 +1,71 @@
+<div class="main">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse row" id="navbarNavAltMarkup">
+            <!-- nav bar -->
+            <div class="navbar-nav col">
+                <!-- ALl button -->
+                <div class=" nav-item nav-link">
+                    <button style='color:black' type="button" class="btn btn-link nav-item nav-link"
+                        (click)="changeCategory(0)">
+                        <p class="titlecategory">All</p>
+                    </button>
+                </div>
+                <!--  Category button -->
+                <div class="dropdown nav-item nav-link" *ngFor="let item of dictMenu| keyvalue">
+                    <button style='color:black' type="button" class="btn btn-link nav-item nav-link"
+                        (click)="changeCategory(item.key.id)">
+                        <p class="dropbtn titlecategory">{{item.key.catalog|uppercase}}</p>
+                    </button>
+                    <div *ngIf="item.value.length!=0" class="dropdown-content">
+                        <button class="concon" *ngFor="let con of item.value" style='color:black' type="button" class="btn btn-link nav-item nav-link"
+                        (click)="changeCategory(con.id)">{{con.catalog|uppercase}}</button>
+                    </div>
+                </div>
+            </div>
+            <!-- search form -->
+            <div class="float-right">
+                <form class="form-inline row">
+                    <input class="form-control mr-sm-2 col" type="search" placeholder="Search" [(ngModel)]="searchKey"
+                        name="search" aria-label="Search" (keyup)="restore(value)">
+                    <a class="col out" routerLink="/login">Log Out</a>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+
+    <nav class="nav nav-pills nav-fill">
+
+    </nav>
+    <!-- =================== -->
+    <div class=""></div>
+    <div class="row">
+        <div class="col-12 row container">
+            <div class="form-book row col-4 rainbow" *ngFor="let item of pageOfItems">
+                <div class="col-4"><img style="width: 100%" src="http://127.0.0.1:3000/{{item.image}}"></div>
+                <div class="col-8">
+                    <div class="titlebook">
+                        <a style="text-decoration: none;" routerLink="/book/{{item.id}}">
+                            <h3 style="color: blue">{{item.title}}</h3>
+                        </a>
+                    </div>
+                    <div>Author: <code>{{item.author}}</code></div>
+                    <div>Price: <code>{{item.price}}đ</code> </div>
+                    <div>Publish: <code>{{item.publish}}</code></div>
+                    <div>Company: <code>{{item.companyIssued}}</code></div>
+                </div>
+            </div>
+        </div>
+        <div class="mx-auto">
+            <jw-pagination [items]="arrBooks" [pageSize]=4 (changePage)="onChangePage($event)"></jw-pagination>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Saira+Stencil+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Play&display=swap" rel="stylesheet">

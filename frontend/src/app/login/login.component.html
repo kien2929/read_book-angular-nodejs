@@ -1,0 +1,11 @@
+<div class="login-page">
+    <div class="form">
+      <p>Sign In</p>
+      <form class="login-form">
+        <input type="text" name="username" placeholder="username" [(ngModel)]="username"/>
+        <input type="password" name="password" placeholder="password" [(ngModel)]="password"/>
+        <p  class="false">{{title}}</p>
+        <button  (click)="login()">login</button>
+      </form>
+    </div>
+  </div>

@@ -1,0 +1,32 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-2" style="background-color: black;min-height: 100vh;">
+            <div><a routerLink="/admin/user" routerLinkActive="active" style="text-decoration: none;">
+                    <h3>User</h3>
+                </a></div>
+            <div><a routerLink="/admin/book" style="text-decoration: none;">
+                    <h3>Book</h3>
+                </a></div>
+            <div><a routerLink="/admin/category" style="text-decoration: none;">
+                    <h3>Category</h3>
+                </a></div>
+        </div>
+        <div class="col-10">
+            <div>
+                <div class="hibar row">
+                    <p>
+                        Hello <code>{{username}} </code><a class="out" routerLink="/login">Sign out</a>
+                    </p>
+                </div>
+                <br>
+                <div class="col-12">
+                    <router-outlet class="col-12"></router-outlet>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>

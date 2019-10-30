@@ -1,0 +1,8 @@
+<link href="https://fonts.googleapis.com/css?family=Saira+Stencil+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+<div class="container-fluid">
+    <div class="title">{{book.title}}</div>
+    <div class="author">Author: {{book.author}}</div>
+    <div class="content" *ngFor="let line of content">{{line}}</div>
+    <div></div>
+</div>
